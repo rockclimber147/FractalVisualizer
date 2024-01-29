@@ -7,6 +7,8 @@ import java.awt.*;
 public class GridCell {
     private static double colorScale = 100;
     private static double colorOffset = 0.5;
+
+    private static int iterationCount = 40;
     private final ComplexNumber coordinates;
     private final ComplexNumber value;
     private int lastIterationCount;
@@ -18,9 +20,13 @@ public class GridCell {
         this.cellColor = new Color(0,0,0);
     }
 
-    public void iterate(int count){
+    public static void setIterationCount(int newCount){
+        iterationCount = newCount;
+    }
+
+    public void iterate(){
         this.lastIterationCount = -1;
-        for (int i = 0; i < count; i++){
+        for (int i = 0; i < iterationCount; i++){
             this.value.power(2);
             this.value.add(this.coordinates);
 

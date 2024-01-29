@@ -1,7 +1,6 @@
 package model;
 
 import display.GameDisplayPanel;
-import display.GameWindow;
 import input.InputHandler;
 import input.MouseInputState;
 
@@ -9,6 +8,7 @@ public class Renderer {
     private static final double DEFAULT_X = -2;
     private static final double DEFAULT_Y = 2;
     private static final double DEFAULT_WIDTH = 4;
+    private static final double DEFAULT_ZOOM_FACTOR = 1.6;
     private final MouseInputState inputState;
     private final Grid grid;
 
@@ -17,16 +17,14 @@ public class Renderer {
     private final int edgeCellCount;
 
     private double zoomLevel;
-    private int iterationCount;
-    public Renderer(int edgeCellCount, int iterationCount){
+    public Renderer(int edgeCellCount){
         this.edgeCellCount = edgeCellCount;
         this.inputState = new MouseInputState(this);
         this.grid = new Grid(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, this.edgeCellCount);
         this.display = new GameDisplayPanel(this.grid, edgeCellCount, new InputHandler(inputState));
-        this.zoomFactor = 1.5;
+        this.zoomFactor = DEFAULT_ZOOM_FACTOR;
         this.zoomLevel = 1 / (DEFAULT_WIDTH / edgeCellCount);
-        this.iterationCount = iterationCount;
-        this.grid.update(iterationCount);
+        this.grid.update();
     }
 
     public GameDisplayPanel getDisplay(){
@@ -38,7 +36,7 @@ public class Renderer {
             return;
         }
         grid.translate(-inputState.getMouseDeltaX() / zoomLevel, inputState.getMouseDeltaY() / zoomLevel);
-        grid.update(this.iterationCount);
+        grid.update();
         display.repaint();
         System.out.println(grid);
     }
@@ -55,7 +53,7 @@ public class Renderer {
         double[] newYvals = this.scale(targetY, 1, zoomAmount);
         this.scale(targetY, 1, zoomAmount);
         grid.resize(newXvals[1], newYvals[1], newXvals[0], newYvals[0]);
-        grid.update(iterationCount);
+        grid.update();
         display.repaint();
     }
 

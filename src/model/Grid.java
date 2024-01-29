@@ -46,9 +46,9 @@ public class Grid {
         return this.cells;
     }
 
-    public void update(int iterationCount){
+    public void update(){
         updateGridCoordinates();
-        iterateGrid(iterationCount);
+        iterateGrid();
     }
 
     private void updateGridCoordinates(){
@@ -64,10 +64,10 @@ public class Grid {
         }
     }
 
-    private void iterateGrid(int iterationCount){
+    private void iterateGrid(){
         for (GridCell[] row: cells){
             for (GridCell col: row){
-                col.iterate(iterationCount);
+                col.iterate();
             }
         }
     }
@@ -110,7 +110,7 @@ public class Grid {
 
     public static void main(String[] args) {
         Grid grid = new Grid(0,2, 2, 8);
-        grid.update(5);
+        grid.update();
         System.out.println(grid.getStringRepresentation());
     }
 }
