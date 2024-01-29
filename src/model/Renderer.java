@@ -8,7 +8,7 @@ public class Renderer {
     private static final double DEFAULT_X = -2;
     private static final double DEFAULT_Y = 2;
     private static final double DEFAULT_WIDTH = 4;
-    private static final double DEFAULT_ZOOM_FACTOR = 1.6;
+    private static final double DEFAULT_ZOOM_FACTOR = 1.1;
     private final MouseInputState inputState;
     private final Grid grid;
 
@@ -41,24 +41,33 @@ public class Renderer {
 
     public void zoomOnPoint(int targetX, int targetY, double zoomAmount){
         double newEdgeLength;
+        double previousEdgeLength = this.grid.getEdgeLength();
         if (zoomAmount == 1){
             // zoom out
-            newEdgeLength = this.grid.getEdgeLength() / zoomFactor;
+            newEdgeLength = previousEdgeLength * zoomFactor;
         } else {
             // zoom in
-            newEdgeLength = this.grid.getEdgeLength() * zoomFactor;
+            newEdgeLength = previousEdgeLength / zoomFactor;
         }
-        double[] newXvals = this.scale(targetX, 0, zoomAmount);
-        double[] newYvals = this.scale(targetY, 1, zoomAmount);
 
-        grid.resize(newXvals[1], newYvals[1], newEdgeLength);
+        double previousTopLeftX = grid.getTopLeft()[0];
+        double previousTopLeftY = grid.getTopLeft()[1];
+
+        double screenEventRelativeX = ((double) targetX / edgeCellCount);
+        double screenEventRelativeY = ((double) targetY / edgeCellCount);
+
+        double modelEventX = previousTopLeftX + previousEdgeLength * screenEventRelativeX;
+        double modelEventY = previousTopLeftY - previousEdgeLength * screenEventRelativeY;
+
+        double newTopLeftX = modelEventX - newEdgeLength * screenEventRelativeX;
+        double newTopLeftY = modelEventY + newEdgeLength * screenEventRelativeY;
+
+        System.out.println("PrevEL: " + previousEdgeLength + " NewEL: " + newEdgeLength + "\n" +
+                        "prevTLX: " + previousTopLeftX + " newTLX: " + newTopLeftX + "\n" +
+                "prevTLY: " + previousTopLeftY + " newTLY: " + newTopLeftY);
+
+        grid.resize(newTopLeftX, newTopLeftY, newEdgeLength);
         grid.update();
         display.repaint();
-    }
-
-    private double[] scale(int targetCoordinate, int axisIndex, double zoomAmount){
-        double fractionAbove = (double) targetCoordinate / edgeCellCount;
-        return new double[]{};
-
     }
 }
