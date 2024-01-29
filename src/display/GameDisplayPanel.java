@@ -26,6 +26,7 @@ public class GameDisplayPanel extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(1.05f));
         for (int i = 0; i < pixelEdgeCount; i++){
             for (int j = 0; j < pixelEdgeCount; j++){
                 g2.setColor(cells[i][j].getCellColor());
