@@ -6,7 +6,6 @@ import java.awt.*;
 
 public class MouseInputState {
     private final Renderer renderer;
-    private boolean leftMousePreviouslyPressed;
     private boolean leftMouseCurrentlyPressed;
 
     private final Point previousMouseLocation;
@@ -17,7 +16,6 @@ public class MouseInputState {
 
     public MouseInputState(Renderer renderer){
         this.renderer = renderer;
-        this.leftMousePreviouslyPressed = false;
         this.leftMouseCurrentlyPressed = false;
         this.previousMouseLocation = new Point(0,0);
         this.currentMouseLocation = new Point(0,0);
@@ -28,7 +26,6 @@ public class MouseInputState {
     public boolean isLeftMouseCurrentlyPressed() {
         return leftMouseCurrentlyPressed;
     }
-
     public void setLeftMouseCurrentlyPressed(boolean leftMouseCurrentlyPressed) {
         this.leftMouseCurrentlyPressed = leftMouseCurrentlyPressed;
     }
@@ -44,7 +41,6 @@ public class MouseInputState {
     public void update(int newX, int newY, int zoomAmount){
         previousMouseLocation.setLocation(currentMouseLocation);
         currentMouseLocation.setLocation(newX, newY);
-        leftMousePreviouslyPressed = leftMouseCurrentlyPressed;
 
         mouseDeltaX = currentMouseLocation.x - previousMouseLocation.x;
         mouseDeltaY = currentMouseLocation.y - previousMouseLocation.y;
