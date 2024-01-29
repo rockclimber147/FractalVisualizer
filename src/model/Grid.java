@@ -7,14 +7,13 @@ import java.util.Arrays;
 
 public class Grid {
     private final double[] topLeft;
-    private final double[] bottomRight;
-
+    private double edgeLength;
     private final int edgeCellCount;
 
     private final GridCell[][] cells;
     public Grid(double topLeftX, double topLeftY, double edgeLength, int edgeCellCount){
         this.topLeft = new double[]{topLeftX, topLeftY};
-        this.bottomRight = new double[]{topLeftX + edgeLength, topLeftY - edgeLength};
+        this.edgeLength = edgeLength;
         this.edgeCellCount = edgeCellCount;
         this.cells = new GridCell[edgeCellCount][edgeCellCount];
 
@@ -31,15 +30,14 @@ public class Grid {
         return topLeft;
     }
 
-    public double[] getBottomRight() {
-        return bottomRight;
+    public double getEdgeLength(){
+        return this.edgeLength;
     }
+
 
     public void translate(double dX, double dY){
         this.topLeft[0] += dX;
         this.topLeft[1] += dY;
-        this.bottomRight[0] += dX;
-        this.bottomRight[1] += dY;
     }
 
     public GridCell[][] getCells(){
@@ -52,13 +50,13 @@ public class Grid {
     }
 
     private void updateGridCoordinates(){
-        double realDelta = (this.bottomRight[0] - this.topLeft[0]) / (edgeCellCount - 1);
-        double complexDelta = (this.bottomRight[1] - this.topLeft[1]) / (edgeCellCount - 1);
+        double realDelta = this.edgeLength / (edgeCellCount - 1);
+        double complexDelta = this.edgeLength / (edgeCellCount - 1);
 
         for (int row = 0; row < edgeCellCount; row++){
             double currentRealCoordinate = this.topLeft[0] + realDelta * row;
             for (int col = 0; col < edgeCellCount; col++){
-                double currentComplexCoordinate = this.topLeft[1] + complexDelta * col;
+                double currentComplexCoordinate = this.topLeft[1] - complexDelta * col;
                 this.cells[row][col].setCoordinates(currentRealCoordinate, currentComplexCoordinate);
             }
         }
@@ -72,12 +70,10 @@ public class Grid {
         }
     }
 
-    public void resize(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY){
+    public void resize(double topLeftX, double topLeftY, double newEdgeLength){
         this.topLeft[0] = topLeftX;
         this.topLeft[1] = topLeftY;
-        this.bottomRight[0] = bottomRightX;
-        this.bottomRight[1] = bottomRightY;
-
+        this.edgeLength = newEdgeLength;
         updateGridCoordinates();
     }
 
@@ -102,7 +98,6 @@ public class Grid {
     public String toString() {
         return "Grid{" +
                 "topLeft=" + Arrays.toString(topLeft) +
-                ", bottomRight=" + Arrays.toString(bottomRight) +
                 ", edgeCellCount=" + edgeCellCount +
                 ", cells=" + Arrays.toString(cells) +
                 '}';

@@ -42,29 +42,25 @@ public class Renderer {
     }
 
     public void zoomOnPoint(int targetX, int targetY, double zoomAmount){
+        double newEdgeLength;
         if (zoomAmount == 1){
             // zoom out
-            this.zoomLevel /= zoomFactor;
+            newEdgeLength = this.grid.getEdgeLength() / zoomFactor;
         } else {
             // zoom in
-            this.zoomLevel *= zoomFactor;
+            newEdgeLength = this.grid.getEdgeLength() * zoomFactor;
         }
         double[] newXvals = this.scale(targetX, 0, zoomAmount);
         double[] newYvals = this.scale(targetY, 1, zoomAmount);
-        this.scale(targetY, 1, zoomAmount);
-        grid.resize(newXvals[1], newYvals[1], newXvals[0], newYvals[0]);
+
+        grid.resize(newXvals[1], newYvals[1], newEdgeLength);
         grid.update();
         display.repaint();
     }
 
     private double[] scale(int targetCoordinate, int axisIndex, double zoomAmount){
         double fractionAbove = (double) targetCoordinate / edgeCellCount;
-        return new double[]{
-                grid.getTopLeft()[axisIndex] - zoomAmount * fractionAbove * zoomFactor *
-                        (grid.getBottomRight()[axisIndex] - grid.getTopLeft()[axisIndex]),
-                grid.getBottomRight()[axisIndex] + zoomAmount * (1 - fractionAbove) * zoomFactor *
-                        (grid.getBottomRight()[axisIndex] - grid.getTopLeft()[axisIndex])
-        };
+        return new double[]{};
 
     }
 }
