@@ -30,11 +30,6 @@ public class ComplexNumber {
         this.complexPart += toAdd.complexPart;
     }
 
-    public void sub(ComplexNumber toSub){
-        this.realPart -= toSub.realPart;
-        this.complexPart -= toSub.complexPart;
-    }
-
     public void multiply(ComplexNumber toMult){
         double newRealPart = this.realPart* toMult.realPart - this.complexPart * toMult.complexPart;
         double newComplexPart = this.complexPart * toMult.realPart + this.realPart * toMult.complexPart;

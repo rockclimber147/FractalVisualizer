@@ -20,6 +20,14 @@ public class GridCell {
         this.cellColor = new Color(0,0,0);
     }
 
+    public static void setColorScale(double colorScale) {
+        GridCell.colorScale = colorScale;
+    }
+
+    public static void setColorOffset(double colorOffset) {
+        GridCell.colorOffset = colorOffset;
+    }
+
     public static void setIterationCount(int newCount){
         iterationCount = newCount;
     }
@@ -39,7 +47,7 @@ public class GridCell {
         }
         updateColor();
     }
-    private void updateColor(){
+    public void updateColor(){
         if (this.lastIterationCount < 0){
             this.cellColor = new Color(0,0,0);
         } else {

@@ -62,10 +62,18 @@ public class Grid {
         }
     }
 
-    private void iterateGrid(){
+    public void iterateGrid(){
         for (GridCell[] row: cells){
             for (GridCell col: row){
                 col.iterate();
+            }
+        }
+    }
+
+    public void updateColors(){
+        for (GridCell[] row: cells){
+            for (GridCell cell: row){
+                cell.updateColor();
             }
         }
     }
