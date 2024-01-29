@@ -1,0 +1,31 @@
+########################################################################################################################
+                                        MANDELBROT RENDERER
+########################################################################################################################
+
+HOW TO VISUALIZE DATA
+
+After iterating, each cell will have a value of -1 (Included in the set, or at least hasn't escaped yet) or a positive
+integer representing the iteratons it took to first escape the local area (Circle of radius 2 centered on the origin)
+
+A square grid of n*n cells is used to represent the data.
+This grid should be interactive and support translation and zoom operations.
+Zooming should have a target that is the cursor position
+
+Current model:
+
+The grid is represented by its top left point and edge length.
+Edge length is different from the resolution, which is number of cells to an edge.
+
+The view square is initialized using:
+Its top left corner (Default is 2,2)
+Edge length (Default is 4, to capture the entire local area)
+Resolution (A measure of pixels used to make an edge, default is 500 giving a 500x500 pixel display)
+
+Each pixel must be mapped to its corresponding coordinate in fractal space, for example setting the resolution to 2
+would give 4 pixels, each covering a quadrant on the cartesian(?) plane.
+
+Translations should only affect the top left coordinate.
+Translations can be decoupled from the current zoom level by taking the difference start and end positions of the mouse
+as translations relative to the current edge length.
+
+Zooming is more complicated.
