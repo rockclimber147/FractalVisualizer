@@ -1,5 +1,6 @@
 package model;
 
+import display.ControlPanel;
 import display.GameDisplayPanel;
 import input.InputHandler;
 import input.MouseInputState;
@@ -13,6 +14,7 @@ public class Renderer {
     private final Grid grid;
 
     private final GameDisplayPanel display;
+    private final ControlPanel controlPanel;
     private final double zoomFactor;
     private final int edgeCellCount;
 
@@ -21,12 +23,32 @@ public class Renderer {
         this.inputState = new MouseInputState(this);
         this.grid = new Grid(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, this.edgeCellCount);
         this.display = new GameDisplayPanel(this.grid, edgeCellCount, new InputHandler(inputState));
+        this.controlPanel = new ControlPanel(this, edgeCellCount - 5);
         this.zoomFactor = DEFAULT_ZOOM_FACTOR;
         this.grid.update();
     }
 
+    public void setGlobalIterationCount(int newCount){
+        GridCell.setIterationCount(newCount);
+        grid.update();
+        display.repaint();
+    }
+
+    public void setGlobalColorOffset(double newOffset){
+        GridCell.setColorOffset(newOffset);
+        display.repaint();
+    }
+
+    public void setGlobalColorFactor(double newFactor){
+        GridCell.setColorScale(newFactor);
+        display.repaint();
+    }
+
     public GameDisplayPanel getDisplay(){
         return display;
+    }
+    public ControlPanel getControlPanel(){
+        return controlPanel;
     }
 
     public void updateFromInputState(){
@@ -37,6 +59,14 @@ public class Renderer {
         grid.update();
         display.repaint();
         System.out.println(grid);
+    }
+
+    public void updateGridColors(){
+        this.grid.updateColors();
+    }
+
+    public void updateGrid(){
+        this.grid.update();
     }
 
     public void zoomOnPoint(int targetX, int targetY, double zoomAmount){
