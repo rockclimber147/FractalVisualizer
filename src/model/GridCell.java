@@ -4,11 +4,12 @@ import complexNumbers.ComplexNumber;
 
 import java.awt.*;
 
-import static java.lang.Math.max;
-
 public class GridCell {
+    private static double colorScale = 100;
+    private static double colorOffset = 0.5;
     private final ComplexNumber coordinates;
     private final ComplexNumber value;
+    private int lastIterationCount;
     private Color cellColor;
 
     public GridCell(ComplexNumber coordinates){
@@ -18,21 +19,25 @@ public class GridCell {
     }
 
     public void iterate(int count){
+        this.lastIterationCount = -1;
         for (int i = 0; i < count; i++){
             this.value.power(2);
             this.value.add(this.coordinates);
-            if (Math.abs(this.value.getComplexPart()) > 2 || Math.abs(this.value.getRealPart()) > 2){
-                setColor(i);
+
+            // If the value escapes the local box, note the amount of iterations it took
+            if (this.value.getDistanceFromOrigin() > 2){
+                this.lastIterationCount = i;
+                updateColor();
                 return;
             }
         }
-        setColor(-1);
+        updateColor();
     }
-    private void setColor(double colorFactor){
-        if (colorFactor < 0){
+    private void updateColor(){
+        if (this.lastIterationCount < 0){
             this.cellColor = new Color(0,0,0);
         } else {
-            this.cellColor = new Color(Color.HSBtoRGB((float) colorFactor/100,1,1));
+            this.cellColor = new Color(Color.HSBtoRGB((float) (lastIterationCount/colorScale + colorOffset),1,1));
         }
 
     }
