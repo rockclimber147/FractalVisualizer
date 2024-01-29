@@ -1,13 +1,14 @@
 
 import display.GameWindow;
+import model.GridCell;
 import model.Renderer;
 
 public class Main {
     public static void main(String[] args) {
         int edgeCellCount = 500;
-        int iterationCount = 80;
+        GridCell.setIterationCount(160);
 
-        Renderer renderer = new Renderer(edgeCellCount, iterationCount);
+        Renderer renderer = new Renderer(edgeCellCount);
         GameWindow window = new GameWindow();
         window.add(renderer.getDisplay());
         window.pack();

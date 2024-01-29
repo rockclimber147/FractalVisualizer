@@ -37,16 +37,8 @@ public class MouseInputState {
         return mouseDeltaX;
     }
 
-    public void setMouseDeltaX(int mouseDeltaX) {
-        this.mouseDeltaX = mouseDeltaX;
-    }
-
     public int getMouseDeltaY() {
         return mouseDeltaY;
-    }
-
-    public void setMouseDeltaY(int mouseDeltaY) {
-        this.mouseDeltaY = mouseDeltaY;
     }
 
     public void update(int newX, int newY, int zoomAmount){

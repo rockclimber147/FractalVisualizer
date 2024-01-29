@@ -10,7 +10,7 @@ import java.awt.*;
 public class GameDisplayPanel extends JPanel{
     // Screen Settings
     private final int  pixelEdgeCount;
-    private GridCell[][] cells;
+    private final GridCell[][] cells;
     public GameDisplayPanel(Grid grid, int pixelEdgeCount, InputHandler inputHandler) {
         this.pixelEdgeCount = pixelEdgeCount;
         this.cells = grid.getCells();
