@@ -16,14 +16,12 @@ public class Renderer {
     private final double zoomFactor;
     private final int edgeCellCount;
 
-    private double zoomLevel;
     public Renderer(int edgeCellCount){
         this.edgeCellCount = edgeCellCount;
         this.inputState = new MouseInputState(this);
         this.grid = new Grid(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, this.edgeCellCount);
         this.display = new GameDisplayPanel(this.grid, edgeCellCount, new InputHandler(inputState));
         this.zoomFactor = DEFAULT_ZOOM_FACTOR;
-        this.zoomLevel = 1 / (DEFAULT_WIDTH / edgeCellCount);
         this.grid.update();
     }
 
@@ -35,7 +33,7 @@ public class Renderer {
         if (inputState.getMouseDeltaX() == 0 && inputState.getMouseDeltaY() == 0 || !inputState.isLeftMouseCurrentlyPressed()){
             return;
         }
-        grid.translate(-inputState.getMouseDeltaX() / zoomLevel, inputState.getMouseDeltaY() / zoomLevel);
+        grid.translate((double) -inputState.getMouseDeltaX() / edgeCellCount, (double) inputState.getMouseDeltaY() / edgeCellCount);
         grid.update();
         display.repaint();
         System.out.println(grid);

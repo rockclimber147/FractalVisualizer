@@ -36,8 +36,8 @@ public class Grid {
 
 
     public void translate(double dX, double dY){
-        this.topLeft[0] += dX;
-        this.topLeft[1] += dY;
+        this.topLeft[0] += dX * edgeLength;
+        this.topLeft[1] += dY * edgeLength;
     }
 
     public GridCell[][] getCells(){
