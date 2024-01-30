@@ -14,6 +14,8 @@ public class GridCell {
     private static double colorOffset = 0.5;
 
     private static int iterationCount = 40;
+
+    private static int zExponent = 2;
     private final ComplexNumber coordinates;
     private final ComplexNumber value;
     private int lastIterationCount;
@@ -41,13 +43,15 @@ public class GridCell {
         iterationCount = newCount;
     }
 
+    public static void setZExponent(final int newExponent){ zExponent = newExponent;}
+
     /**
      * Iterates the value in the cell iteration count times or until the value escapes to infinity
      */
     public void iterate(){
         this.lastIterationCount = -1;
         for (int i = 0; i < iterationCount; i++){
-            this.value.power(2);
+            this.value.power(zExponent);
             this.value.add(this.coordinates);
 
             // If the value escapes the local box, note the amount of iterations it took

@@ -47,6 +47,12 @@ public class Renderer {
         display.repaint();
     }
 
+    public void updateGlobalExponent(final int newExponent){
+        GridCell.setZExponent(newExponent);
+        grid.update();
+        display.repaint();
+    }
+
     /**
      * Sets the color offset and refreshes the display
      * @param newOffset The new color offset

@@ -19,6 +19,8 @@ public class ControlPanel extends JPanel implements ChangeListener {
     private final LabelSlider hueOffset;
     private final LabelSlider hueFactor;
 
+    private final LabelSlider exponent;
+
     /**
      * Creates a ControlPanel object
      * @param renderer The renderer to control
@@ -26,10 +28,12 @@ public class ControlPanel extends JPanel implements ChangeListener {
      */
     public ControlPanel(final Renderer renderer, final int edgeCellCount){
         this.renderer = renderer;
-        int labelSliderHeight = edgeCellCount / 3 - 50;
+        int labelCount = 4;
+        int labelSliderHeight = edgeCellCount / labelCount - 20 * labelCount;
         this.iteration = new LabelSlider("Iteration Count: 100", 1, 2500, 100, new Dimension(edgeCellCount, labelSliderHeight));
         this.hueOffset = new LabelSlider("Hue Offset: 500", 0, 1000, 500, new Dimension(edgeCellCount, labelSliderHeight));
         this.hueFactor = new LabelSlider("Hue Cycle Factor: 200", 2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));
+        this.exponent = new LabelSlider("Equation: z^2 + c", 1, 10, 2, new Dimension(edgeCellCount, labelSliderHeight));
 
         this.add(iteration.getLabel());
         this.add(iteration.getSlider());
@@ -42,6 +46,10 @@ public class ControlPanel extends JPanel implements ChangeListener {
         this.add(hueFactor.getLabel());
         this.add(hueFactor.getSlider());
         hueFactor.getSlider().addChangeListener(this);
+
+        this.add(exponent.getLabel());
+        this.add(exponent.getSlider());
+        exponent.getSlider().addChangeListener(this);
 
         this.setBounds(edgeCellCount, 0 , edgeCellCount, edgeCellCount);
 
@@ -59,6 +67,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
         JSlider iterationSlider = iteration.getSlider();
         JSlider hueOffsetSlider = hueOffset.getSlider();
         JSlider hueFactorSlider = hueFactor.getSlider();
+        JSlider exponentSlider = exponent.getSlider();
 
         if (e.getSource().equals(iterationSlider)){
             int value = iterationSlider.getValue();
@@ -75,6 +84,11 @@ public class ControlPanel extends JPanel implements ChangeListener {
             hueFactor.getLabel().setText("Hue Cycle Factor: " + value);
             renderer.updateGlobalColorFactor(value);
             renderer.updateGridColors();
+        } else if (e.getSource().equals(exponentSlider)) {
+            int value = exponentSlider.getValue();
+            exponent.getLabel().setText("Equation: z^" + value + " + c");
+            renderer.updateGlobalExponent(value);
+            renderer.updateGrid();
         }
     }
 }
