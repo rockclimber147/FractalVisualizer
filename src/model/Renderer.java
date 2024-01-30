@@ -28,18 +28,18 @@ public class Renderer {
         this.grid.update();
     }
 
-    public void setGlobalIterationCount(int newCount){
+    public void updateGlobalIterationCount(int newCount){
         GridCell.setIterationCount(newCount);
         grid.update();
         display.repaint();
     }
 
-    public void setGlobalColorOffset(double newOffset){
+    public void updateGlobalColorOffset(double newOffset){
         GridCell.setColorOffset(newOffset);
         display.repaint();
     }
 
-    public void setGlobalColorFactor(double newFactor){
+    public void updateGlobalColorFactor(double newFactor){
         GridCell.setColorScale(newFactor);
         display.repaint();
     }

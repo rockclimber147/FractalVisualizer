@@ -49,19 +49,19 @@ public class ControlPanel extends JPanel implements ChangeListener {
             System.out.println(1);
             int value = iterationSlider.getValue();
             iteration.getLabel().setText("Iteration Count: " + value);
-            renderer.setGlobalIterationCount(value);
+            renderer.updateGlobalIterationCount(value);
             renderer.updateGrid();
         } else if (e.getSource().equals(hueOffsetSlider)){
             int value = hueOffsetSlider.getValue();
             System.out.println(2);
             hueOffset.getLabel().setText("Hue Offset: " + value);
-            renderer.setGlobalColorOffset((double) value / 1000);
+            renderer.updateGlobalColorOffset((double) value / 1000);
             renderer.updateGridColors();
         } else if (e.getSource().equals(hueFactorSlider)){
             int value = hueFactorSlider.getValue();
             System.out.println(3);
             hueFactor.getLabel().setText("Hue Cycle Factor: " + value);
-            renderer.setGlobalColorFactor(value);
+            renderer.updateGlobalColorFactor(value);
             renderer.updateGridColors();
         }
     }
