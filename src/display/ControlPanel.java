@@ -22,7 +22,6 @@ public class ControlPanel extends JPanel implements ChangeListener {
     private final LabelSlider iteration;
     private final LabelSlider hueOffset;
     private final LabelSlider hueFactor;
-
     private final LabelSlider exponent;
 
     /**
@@ -42,19 +41,18 @@ public class ControlPanel extends JPanel implements ChangeListener {
         this.exponent = new LabelSlider("Equation: z^" + DEFAULT_EXPONENT + " + c",
                 1, 10, 2, new Dimension(edgeCellCount, labelSliderHeight));
 
-        this.incorporate(iteration);
-        this.incorporate(hueOffset);
-        this.incorporate(hueFactor);
-        this.incorporate(exponent);
+        this.incorporateLabelSlider(iteration);
+        this.incorporateLabelSlider(hueOffset);
+        this.incorporateLabelSlider(hueFactor);
+        this.incorporateLabelSlider(exponent);
 
         this.setBounds(edgeCellCount, 0 , edgeCellCount, edgeCellCount);
-
         this.setFocusable(true);
         this.setOpaque(true);
         this.setVisible(true);
     }
 
-    private void incorporate(LabelSlider lSlider){
+    private void incorporateLabelSlider(LabelSlider lSlider){
         this.add(lSlider.getLabel());
         this.add(lSlider.getSlider());
         lSlider.getSlider().addChangeListener(this);
