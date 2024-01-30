@@ -27,7 +27,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
     public ControlPanel(final Renderer renderer, final int edgeCellCount){
         this.renderer = renderer;
         int labelSliderHeight = edgeCellCount / 3 - 50;
-        this.iteration = new LabelSlider("Iteration Count: 50", 1, 1000, 50, new Dimension(edgeCellCount, labelSliderHeight));
+        this.iteration = new LabelSlider("Iteration Count: 100", 1, 2500, 100, new Dimension(edgeCellCount, labelSliderHeight));
         this.hueOffset = new LabelSlider("Hue Offset: 500", 0, 1000, 500, new Dimension(edgeCellCount, labelSliderHeight));
         this.hueFactor = new LabelSlider("Hue Cycle Factor: 200", 2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));
 
