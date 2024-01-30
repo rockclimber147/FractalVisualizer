@@ -71,13 +71,12 @@ public class Grid {
      * Updates the coordinates of each cell in the grid
      */
     private void updateGridCellCoordinates(){
-        double realDelta = this.edgeLength / (edgeCellCount - 1);
-        double complexDelta = this.edgeLength / (edgeCellCount - 1);
+        double delta = this.edgeLength / (edgeCellCount - 1);
 
         for (int row = 0; row < edgeCellCount; row++){
-            double currentRealCoordinate = this.topLeft[0] + realDelta * row;
+            double currentRealCoordinate = this.topLeft[0] + delta * row;
             for (int col = 0; col < edgeCellCount; col++){
-                double currentComplexCoordinate = this.topLeft[1] - complexDelta * col;
+                double currentComplexCoordinate = this.topLeft[1] - delta * col;
                 this.cells[row][col].setCoordinates(currentRealCoordinate, currentComplexCoordinate);
             }
         }
