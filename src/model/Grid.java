@@ -2,16 +2,27 @@ package model;
 
 import complexNumbers.ComplexNumber;
 
-import java.text.DecimalFormat;
 import java.util.Arrays;
 
+/**
+ * Models a grid of individual GridCells
+ * @author Daylen Smith
+ * @version 2024
+ */
 public class Grid {
     private final double[] topLeft;
     private double edgeLength;
     private final int edgeCellCount;
-
     private final GridCell[][] cells;
-    public Grid(double topLeftX, double topLeftY, double edgeLength, int edgeCellCount){
+
+    /**
+     * Creates a new grid
+     * @param topLeftX The x position of the top left corner of the bounding square
+     * @param topLeftY The y position of the top left corner of the bounding square
+     * @param edgeLength The edge length of the bounding square
+     * @param edgeCellCount The amount of cells per edge
+     */
+    public Grid(final double topLeftX, final double topLeftY, final double edgeLength, final int edgeCellCount){
         this.topLeft = new double[]{topLeftX, topLeftY};
         this.edgeLength = edgeLength;
         this.edgeCellCount = edgeCellCount;
@@ -23,7 +34,7 @@ public class Grid {
             }
         }
 
-        this.updateGridCoordinates();
+        this.updateGridCellCoordinates();
     }
 
     public double[] getTopLeft() {
@@ -34,8 +45,12 @@ public class Grid {
         return this.edgeLength;
     }
 
-
-    public void translate(double dX, double dY){
+    /**
+     * Changes the position of the top left corner of the bounding square
+     * @param dX The x displacement as a fraction of the edge length
+     * @param dY The y displacement as a fraction of the edge length
+     */
+    public void translate(final double dX, final double dY){
         this.topLeft[0] += dX * edgeLength;
         this.topLeft[1] += dY * edgeLength;
     }
@@ -44,12 +59,18 @@ public class Grid {
         return this.cells;
     }
 
+    /**
+     * Updates the cells in the grid
+     */
     public void update(){
-        updateGridCoordinates();
+        updateGridCellCoordinates();
         iterateGrid();
     }
 
-    private void updateGridCoordinates(){
+    /**
+     * Updates the coordinates of each cell in the grid
+     */
+    private void updateGridCellCoordinates(){
         double realDelta = this.edgeLength / (edgeCellCount - 1);
         double complexDelta = this.edgeLength / (edgeCellCount - 1);
 
@@ -62,6 +83,9 @@ public class Grid {
         }
     }
 
+    /**
+     * Tells each cell to iterate
+     */
     public void iterateGrid(){
         for (GridCell[] row: cells){
             for (GridCell col: row){
@@ -70,6 +94,9 @@ public class Grid {
         }
     }
 
+    /**
+     * Tells each cell to update their colors
+     */
     public void updateColors(){
         for (GridCell[] row: cells){
             for (GridCell cell: row){
@@ -78,28 +105,17 @@ public class Grid {
         }
     }
 
-    public void resize(double topLeftX, double topLeftY, double newEdgeLength){
+    /**
+     * Resizes the bounding square
+     * @param topLeftX The new x position of the top left corner
+     * @param topLeftY The new y position of the top left corner
+     * @param newEdgeLength The new edge length
+     */
+    public void resize(final double topLeftX, final double topLeftY, final double newEdgeLength){
         this.topLeft[0] = topLeftX;
         this.topLeft[1] = topLeftY;
         this.edgeLength = newEdgeLength;
-        updateGridCoordinates();
-    }
-
-    public String getStringRepresentation(){
-        StringBuilder output = new StringBuilder();
-        DecimalFormat format = new DecimalFormat("0.00");
-        for (int col = 0; col < edgeCellCount; col++){
-            for (int row = 0; row < edgeCellCount; row++){
-                double[] currentCoords = cells[row][col].getDoubleCoords();
-                output.append("[")
-                        .append(format.format(currentCoords[0]))
-                        .append(",")
-                        .append(format.format(currentCoords[1]))
-                        .append("]");
-            }
-            output.append("\n");
-        }
-        return output.toString();
+        updateGridCellCoordinates();
     }
 
     @Override
@@ -109,11 +125,5 @@ public class Grid {
                 ", edgeCellCount=" + edgeCellCount +
                 ", cells=" + Arrays.toString(cells) +
                 '}';
-    }
-
-    public static void main(String[] args) {
-        Grid grid = new Grid(0,2, 2, 8);
-        grid.update();
-        System.out.println(grid.getStringRepresentation());
     }
 }

@@ -5,6 +5,11 @@ import display.DisplayPanel;
 import input.InputHandler;
 import input.MouseInputState;
 
+/**
+ * Handles the process of rendering the Mandelbrot set
+ * @author Daylen Smith
+ * @version 2024
+ */
 public class Renderer {
     private static final double DEFAULT_X = -2;
     private static final double DEFAULT_Y = 2;
@@ -18,7 +23,11 @@ public class Renderer {
     private final double zoomFactor;
     private final int edgeCellCount;
 
-    public Renderer(int edgeCellCount){
+    /**
+     * Creates a new renderer
+     * @param edgeCellCount The amount of cells per edge
+     */
+    public Renderer(final int edgeCellCount){
         this.edgeCellCount = edgeCellCount;
         this.inputState = new MouseInputState(this);
         this.grid = new Grid(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, this.edgeCellCount);
@@ -28,18 +37,30 @@ public class Renderer {
         this.grid.update();
     }
 
-    public void updateGlobalIterationCount(int newCount){
+    /**
+     * Sets the iteration count and updates the model
+     * @param newCount The new iteration count
+     */
+    public void updateGlobalIterationCount(final int newCount){
         GridCell.setIterationCount(newCount);
         grid.update();
         display.repaint();
     }
 
-    public void updateGlobalColorOffset(double newOffset){
+    /**
+     * Sets the color offset and refreshes the display
+     * @param newOffset The new color offset
+     */
+    public void updateGlobalColorOffset(final double newOffset){
         GridCell.setColorOffset(newOffset);
         display.repaint();
     }
 
-    public void updateGlobalColorFactor(double newFactor){
+    /**
+     * Sets the color change factor and refreshes the display
+     * @param newFactor The new color factor
+     */
+    public void updateGlobalColorFactor(final double newFactor){
         GridCell.setColorScale(newFactor);
         display.repaint();
     }
@@ -51,6 +72,9 @@ public class Renderer {
         return controlPanel;
     }
 
+    /**
+     * Reads the current mouse input state and updates the model accordingly
+     */
     public void updateFromInputState(){
         if (inputState.getMouseDeltaX() == 0 && inputState.getMouseDeltaY() == 0 || !inputState.isLeftMouseCurrentlyPressed()){
             return;
@@ -61,23 +85,35 @@ public class Renderer {
         System.out.println(grid);
     }
 
+    /**
+     * Calls on the grid to update its colors
+     */
     public void updateGridColors(){
         this.grid.updateColors();
     }
 
+    /**
+     * Calls on the grid to iterate and update its colors
+     */
     public void updateGrid(){
         this.grid.update();
     }
 
-    public void zoomOnPoint(int targetX, int targetY, double zoomAmount){
+    /**
+     * Resizes the bounding box to emulate zooming in on a point
+     * @param targetX The x coordinate of the zoom point in screen pixel space
+     * @param targetY The y coordinate of the zoom point in screen pixel space
+     * @param zoomFactor An integer denoting zoom in or out
+     */
+    public void zoomOnPoint(int targetX, int targetY, double zoomFactor){
         double newEdgeLength;
         double previousEdgeLength = this.grid.getEdgeLength();
-        if (zoomAmount == 1){
+        if (zoomFactor == 1){
             // zoom out
-            newEdgeLength = previousEdgeLength * zoomFactor;
+            newEdgeLength = previousEdgeLength * this.zoomFactor;
         } else {
             // zoom in
-            newEdgeLength = previousEdgeLength / zoomFactor;
+            newEdgeLength = previousEdgeLength / this.zoomFactor;
         }
 
         double previousTopLeftX = grid.getTopLeft()[0];

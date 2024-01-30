@@ -4,6 +4,11 @@ import complexNumbers.ComplexNumber;
 
 import java.awt.*;
 
+/**
+ * Simulates a pixel in the Mandelbrot set
+ * @author Daylen Smith
+ * @version 2024
+ */
 public class GridCell {
     private static double colorScale = 100;
     private static double colorOffset = 0.5;
@@ -14,7 +19,11 @@ public class GridCell {
     private int lastIterationCount;
     private Color cellColor;
 
-    public GridCell(ComplexNumber coordinates){
+    /**
+     * Creates a grid cell
+     * @param coordinates The coordinates of the cell as a complex number
+     */
+    public GridCell(final ComplexNumber coordinates){
         this.coordinates = coordinates;
         this.value = coordinates.copy();
         this.cellColor = new Color(0,0,0);
@@ -32,6 +41,9 @@ public class GridCell {
         iterationCount = newCount;
     }
 
+    /**
+     * Iterates the value in the cell iteration count times or until the value escapes to infinity
+     */
     public void iterate(){
         this.lastIterationCount = -1;
         for (int i = 0; i < iterationCount; i++){
@@ -47,6 +59,10 @@ public class GridCell {
         }
         updateColor();
     }
+
+    /**
+     * Updates the color of the cell based on the last iteration count
+     */
     public void updateColor(){
         if (this.lastIterationCount < 0){
             this.cellColor = new Color(0,0,0);
@@ -56,15 +72,16 @@ public class GridCell {
 
     }
 
+    /**
+     * Sets the coordinates and value complex numbers
+     * @param real The real part to set
+     * @param complex The complex part to set
+     */
     public void setCoordinates(Double real, double complex){
         coordinates.setRealPart(real);
         coordinates.setComplexPart(complex);
         value.setRealPart(real);
         value.setComplexPart(complex);
-    }
-
-    public double[] getDoubleCoords(){
-        return new double[] {coordinates.getRealPart(), coordinates.getComplexPart()};
     }
 
     public Color getCellColor(){
