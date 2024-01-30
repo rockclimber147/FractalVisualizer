@@ -30,9 +30,9 @@ public class ComplexNumber {
         this.complexPart += toAdd.complexPart;
     }
 
-    public void multiply(ComplexNumber toMult){
-        double newRealPart = this.realPart* toMult.realPart - this.complexPart * toMult.complexPart;
-        double newComplexPart = this.complexPart * toMult.realPart + this.realPart * toMult.complexPart;
+    public void multiply(ComplexNumber toMultiply){
+        double newRealPart = this.realPart* toMultiply.realPart - this.complexPart * toMultiply.complexPart;
+        double newComplexPart = this.complexPart * toMultiply.realPart + this.realPart * toMultiply.complexPart;
         this.realPart = newRealPart;
         this.complexPart = newComplexPart;
     }
