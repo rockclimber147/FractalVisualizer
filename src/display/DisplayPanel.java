@@ -23,7 +23,7 @@ public class DisplayPanel extends JPanel{
      * @param pixelEdgeCount The edge length of the display in pixels
      * @param inputHandler The mouse input handler
      */
-    public DisplayPanel(Grid grid, int pixelEdgeCount, InputHandler inputHandler) {
+    public DisplayPanel(final Grid grid, final int pixelEdgeCount, final InputHandler inputHandler) {
         this.pixelEdgeCount = pixelEdgeCount;
         this.cells = grid.getCells();
         this.addMouseListener(inputHandler);
@@ -39,7 +39,7 @@ public class DisplayPanel extends JPanel{
      * @param g the <code>Graphics</code> object to protect
      */
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(final Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(1.05f));
