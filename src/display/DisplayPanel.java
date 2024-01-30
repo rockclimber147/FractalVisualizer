@@ -7,11 +7,23 @@ import model.GridCell;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameDisplayPanel extends JPanel{
+/**
+ * Displays the rendered Mandelbrot set
+ * @author Daylen Smith
+ * @version 2024
+ */
+public class DisplayPanel extends JPanel{
     // Screen Settings
     private final int  pixelEdgeCount;
     private final GridCell[][] cells;
-    public GameDisplayPanel(Grid grid, int pixelEdgeCount, InputHandler inputHandler) {
+
+    /**
+     * Creates a display panel for the rendered Mandelbrot set
+     * @param grid The grid of grid cells
+     * @param pixelEdgeCount The edge length of the display in pixels
+     * @param inputHandler The mouse input handler
+     */
+    public DisplayPanel(Grid grid, int pixelEdgeCount, InputHandler inputHandler) {
         this.pixelEdgeCount = pixelEdgeCount;
         this.cells = grid.getCells();
         this.addMouseListener(inputHandler);
@@ -22,6 +34,10 @@ public class GameDisplayPanel extends JPanel{
         this.setDoubleBuffered(true);
     }
 
+    /**
+     * Paints the display panel based on the color states of the grid cells
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);

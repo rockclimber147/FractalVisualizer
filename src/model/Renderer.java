@@ -1,7 +1,7 @@
 package model;
 
 import display.ControlPanel;
-import display.GameDisplayPanel;
+import display.DisplayPanel;
 import input.InputHandler;
 import input.MouseInputState;
 
@@ -13,7 +13,7 @@ public class Renderer {
     private final MouseInputState inputState;
     private final Grid grid;
 
-    private final GameDisplayPanel display;
+    private final DisplayPanel display;
     private final ControlPanel controlPanel;
     private final double zoomFactor;
     private final int edgeCellCount;
@@ -22,7 +22,7 @@ public class Renderer {
         this.edgeCellCount = edgeCellCount;
         this.inputState = new MouseInputState(this);
         this.grid = new Grid(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, this.edgeCellCount);
-        this.display = new GameDisplayPanel(this.grid, edgeCellCount, new InputHandler(inputState));
+        this.display = new DisplayPanel(this.grid, edgeCellCount, new InputHandler(inputState));
         this.controlPanel = new ControlPanel(this, edgeCellCount - 5);
         this.zoomFactor = DEFAULT_ZOOM_FACTOR;
         this.grid.update();
@@ -44,7 +44,7 @@ public class Renderer {
         display.repaint();
     }
 
-    public GameDisplayPanel getDisplay(){
+    public DisplayPanel getDisplay(){
         return display;
     }
     public ControlPanel getControlPanel(){
