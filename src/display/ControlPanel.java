@@ -14,6 +14,7 @@ import java.awt.*;
  * @version 2024
  */
 public class ControlPanel extends JPanel implements ChangeListener {
+    private static final int LABEL_SLIDER_COUNT = 4;
     private final Renderer renderer;
     private final LabelSlider iteration;
     private final LabelSlider hueOffset;
@@ -28,8 +29,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
      */
     public ControlPanel(final Renderer renderer, final int edgeCellCount){
         this.renderer = renderer;
-        int labelCount = 4;
-        int labelSliderHeight = edgeCellCount / labelCount - 20 * labelCount;
+        int labelSliderHeight = edgeCellCount / LABEL_SLIDER_COUNT;
         this.iteration = new LabelSlider("Iteration Count: 100", 1, 2500, 100, new Dimension(edgeCellCount, labelSliderHeight));
         this.hueOffset = new LabelSlider("Hue Offset: 500", 0, 1000, 500, new Dimension(edgeCellCount, labelSliderHeight));
         this.hueFactor = new LabelSlider("Hue Cycle Factor: 200", 2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));

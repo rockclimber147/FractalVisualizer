@@ -9,8 +9,9 @@ import java.awt.*;
  * @version 2024
  */
 public class LabelSlider {
-    JLabel label;
-    JSlider slider;
+    private static final int LABEL_HEIGHT = 15;
+    private final JLabel label;
+    private final JSlider slider;
 
     /**
      * Creates a new LabelSlider
@@ -22,9 +23,9 @@ public class LabelSlider {
      */
     public LabelSlider(final String label, final int min, final int max, final int value, final Dimension dimension){
         this.label = new JLabel(label);
-        this.label.setPreferredSize(new Dimension(dimension.width, 15));
+        this.label.setPreferredSize(new Dimension(dimension.width, LABEL_HEIGHT));
         this.slider = new JSlider(min, max, value);
-        this.slider.setPreferredSize(dimension);
+        this.slider.setPreferredSize(new Dimension(dimension.width, dimension.height - LABEL_HEIGHT));
     }
 
     /**
