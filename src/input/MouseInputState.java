@@ -4,6 +4,11 @@ import model.Renderer;
 
 import java.awt.*;
 
+/**
+ * Describes the current state of the mouse
+ * @author Daylen Smith
+ * @version 2024
+ */
 public class MouseInputState {
     private final Renderer renderer;
     private boolean leftMouseCurrentlyPressed;
@@ -14,7 +19,11 @@ public class MouseInputState {
     private int mouseDeltaX;
     private int mouseDeltaY;
 
-    public MouseInputState(Renderer renderer){
+    /**
+     * Creates a new mouse input state
+     * @param renderer The renderer to use with the input
+     */
+    public MouseInputState(final Renderer renderer){
         this.renderer = renderer;
         this.leftMouseCurrentlyPressed = false;
         this.previousMouseLocation = new Point(0,0);
@@ -26,7 +35,7 @@ public class MouseInputState {
     public boolean isLeftMouseCurrentlyPressed() {
         return leftMouseCurrentlyPressed;
     }
-    public void setLeftMouseCurrentlyPressed(boolean leftMouseCurrentlyPressed) {
+    public void setLeftMouseCurrentlyPressed(final boolean leftMouseCurrentlyPressed) {
         this.leftMouseCurrentlyPressed = leftMouseCurrentlyPressed;
     }
 
@@ -38,7 +47,13 @@ public class MouseInputState {
         return mouseDeltaY;
     }
 
-    public void update(int newX, int newY, int zoomAmount){
+    /**
+     * Updates the mouse state based off of the previous state
+     * @param newX The incoming mouse x position
+     * @param newY The incoming mouse y position
+     * @param zoomAmount The incoming mouse scroll direction
+     */
+    public void update(final int newX, final int newY, final int zoomAmount){
         previousMouseLocation.setLocation(currentMouseLocation);
         currentMouseLocation.setLocation(newX, newY);
 
