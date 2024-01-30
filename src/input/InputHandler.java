@@ -81,6 +81,5 @@ public class InputHandler implements MouseInputListener, MouseWheelListener {
     public void mouseWheelMoved(final MouseWheelEvent e) {
         // positive = scroll down
         mouseState.update(e.getX(), e.getY(), e.getWheelRotation());
-        System.out.println("Scrolled: " + e.getWheelRotation());
     }
 }

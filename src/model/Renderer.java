@@ -82,7 +82,6 @@ public class Renderer {
         grid.translate((double) -inputState.getMouseDeltaX() / edgeCellCount, (double) inputState.getMouseDeltaY() / edgeCellCount);
         grid.update();
         display.repaint();
-        System.out.println(grid);
     }
 
     /**
@@ -127,10 +126,6 @@ public class Renderer {
 
         double newTopLeftX = modelEventX - newEdgeLength * screenEventRelativeX;
         double newTopLeftY = modelEventY + newEdgeLength * screenEventRelativeY;
-
-        System.out.println("PrevEL: " + previousEdgeLength + " NewEL: " + newEdgeLength + "\n" +
-                        "prevTLX: " + previousTopLeftX + " newTLX: " + newTopLeftX + "\n" +
-                "prevTLY: " + previousTopLeftY + " newTLY: " + newTopLeftY);
 
         grid.resize(newTopLeftX, newTopLeftY, newEdgeLength);
         grid.update();
