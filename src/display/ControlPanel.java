@@ -8,11 +8,22 @@ import model.Renderer;
 
 import java.awt.*;
 
+/**
+ * Holds the settings sliders for the Mandelbrot renderer
+ * @author Daylen Smith
+ * @version 2024
+ */
 public class ControlPanel extends JPanel implements ChangeListener {
     private final Renderer renderer;
     private final LabelSlider iteration;
     private final LabelSlider hueOffset;
     private final LabelSlider hueFactor;
+
+    /**
+     * Creates a ControlPanel object
+     * @param renderer The renderer to control
+     * @param edgeCellCount The side length of the panel in pixels
+     */
     public ControlPanel(Renderer renderer, int edgeCellCount){
         this.renderer = renderer;
         int labelSliderHeight = edgeCellCount / 3 - 50;
@@ -39,6 +50,10 @@ public class ControlPanel extends JPanel implements ChangeListener {
         this.setVisible(true);
     }
 
+    /**
+     * Handles changes in state from any of the sliders
+     * @param e  a ChangeEvent object
+     */
     @Override
     public void stateChanged(ChangeEvent e) {
         JSlider iterationSlider = iteration.getSlider();
