@@ -3,7 +3,6 @@ package display;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import model.Renderer;
 
 import java.awt.*;
@@ -15,6 +14,10 @@ import java.awt.*;
  */
 public class ControlPanel extends JPanel implements ChangeListener {
     private static final int LABEL_SLIDER_COUNT = 4;
+    private static final int DEFAULT_ITERATION_COUNT = 100;
+    private static final int DEFAULT_HUE_OFFSET = 500;
+    private static final int DEFAULT_HUE_CYCLE_FACTOR = 200;
+    private static final int DEFAULT_EXPONENT = 2;
     private final Renderer renderer;
     private final LabelSlider iteration;
     private final LabelSlider hueOffset;
@@ -30,10 +33,14 @@ public class ControlPanel extends JPanel implements ChangeListener {
     public ControlPanel(final Renderer renderer, final int edgeCellCount){
         this.renderer = renderer;
         int labelSliderHeight = edgeCellCount / LABEL_SLIDER_COUNT;
-        this.iteration = new LabelSlider("Iteration Count: 100", 1, 2500, 100, new Dimension(edgeCellCount, labelSliderHeight));
-        this.hueOffset = new LabelSlider("Hue Offset: 500", 0, 1000, 500, new Dimension(edgeCellCount, labelSliderHeight));
-        this.hueFactor = new LabelSlider("Hue Cycle Factor: 200", 2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));
-        this.exponent = new LabelSlider("Equation: z^2 + c", 1, 10, 2, new Dimension(edgeCellCount, labelSliderHeight));
+        this.iteration = new LabelSlider("Iteration Count: " + DEFAULT_ITERATION_COUNT,
+                1, 2500, 100, new Dimension(edgeCellCount, labelSliderHeight));
+        this.hueOffset = new LabelSlider("Hue Offset: " + DEFAULT_HUE_OFFSET,
+                0, 1000, 500, new Dimension(edgeCellCount, labelSliderHeight));
+        this.hueFactor = new LabelSlider("Hue Cycle Factor: " + DEFAULT_HUE_CYCLE_FACTOR,
+                2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));
+        this.exponent = new LabelSlider("Equation: z^" + DEFAULT_EXPONENT + " + c",
+                1, 10, 2, new Dimension(edgeCellCount, labelSliderHeight));
 
         this.incorporate(iteration);
         this.incorporate(hueOffset);
@@ -55,7 +62,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
 
     /**
      * Handles changes in state from any of the sliders
-     * @param e  a ChangeEvent object
+     * @param e a ChangeEvent object
      */
     @Override
     public void stateChanged(final ChangeEvent e) {
