@@ -20,14 +20,6 @@ public class ComplexNumber {
     }
 
     /**
-     * Returns the real part of the complex number
-     * @return The real part
-     */
-    public double getRealPart() {
-        return realPart;
-    }
-
-    /**
      * Sets the real part
      * @param realPart The new real part
      */

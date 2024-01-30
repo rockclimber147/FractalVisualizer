@@ -20,10 +20,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener {
     public InputHandler(final MouseInputState mouseState) {
         this.mouseState = mouseState;
     }
-    @Override
-    public void mouseClicked(final MouseEvent e) {
-
-    }
 
     /**
      * Updates the mouse state when mouse is clicked
@@ -43,16 +39,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener {
     public void mouseReleased(final MouseEvent e) {
         mouseState.setLeftMouseCurrentlyPressed(false);
         mouseState.update(e.getX(), e.getY(), 0);
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 
     /**
@@ -82,4 +68,13 @@ public class InputHandler implements MouseInputListener, MouseWheelListener {
         // positive = scroll down
         mouseState.update(e.getX(), e.getY(), e.getWheelRotation());
     }
+
+    @Override
+    public void mouseClicked(final MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
