@@ -1,11 +1,41 @@
 ########################################################################################################################
-                                        MANDELBROT RENDERER
+                                               MANDELBROT RENDERER
 ########################################################################################################################
 
-HOW TO VISUALIZE DATA
+---------------------------------------------------- MODEL -------------------------------------------------------------
+
+The Renderer class controls high level operations on Grid, Display and Control modules
+The Grid contains and controls a grid of GridCells
+Each GridCell has two ComplexNumbers and is responsible for a pixel on the grid display
+ComplexNumber implements the complex math needed to calculate new ComplexNumbers
+
+Control tells the Renderer what to do based on slider input.
+Display uses an InputListener to update the current mouse state and talk to the renderer.
+The mouseState is read by the renderer to react to actions appropriately.
+
+Pixels are set by either calculating the iterations it took to escape OR by changing the hue sliders (no need to
+recalculate in this case as each GridCell stores their last iteration count)
+
+---------------------------------------------- PIXEL CALCULATIONS ------------------------------------------------------
+Each iteration, the VALUE parameter of a pixel is raised to an exponent and the ORIGINAL COORDINATES are added to the
+value. The resulting value is then added back into the original equation.
+
+General formula:
+VALUE = VALUE^Exponent + ORIGINAL COORDINATE
+
+The values distance to the origin is then checked.
+
+If the distance is greater than 2:
+    Iteration stops. It has "escaped" and the pixel is colored based on the amount of iterations it took to escape.
+Else:
+    Iteration continues.
+
+If value never escapes it is considered part of the set and is colored black.
+
+------------------------------------------------- VISUALIZING DATA -----------------------------------------------------
 
 After iterating, each cell will have a value of -1 (Included in the set, or at least hasn't escaped yet) or a positive
-integer representing the iteratons it took to first escape the local area (Circle of radius 2 centered on the origin)
+integer representing the iterations it took to first escape the local area (Circle of radius 2 centered on the origin)
 
 A square grid of n*n cells is used to represent the data.
 This grid should be interactive and support translation and zoom operations.
@@ -24,8 +54,9 @@ Resolution (A measure of pixels used to make an edge, default is 500 giving a 50
 Each pixel must be mapped to its corresponding coordinate in fractal space, for example setting the resolution to 2
 would give 4 pixels, each covering a quadrant on the cartesian(?) plane.
 
-Translations should only affect the top left coordinate.
-Translations can be decoupled from the current zoom level by taking the difference start and end positions of the mouse
+Translations only affect the top left coordinate.
+Translations can be decoupled from the current zoom level  by taking the difference start and end positions of the mouse
 as translations relative to the current edge length.
 
-Zooming is more complicated.
+Zooming is more complicated. I ended up implementing a zoom which would scale the edge length and translate the top left
+corner such that the mouse is pointing at the same virtual coordinate as before the zoom.
