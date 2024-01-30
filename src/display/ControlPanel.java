@@ -35,27 +35,22 @@ public class ControlPanel extends JPanel implements ChangeListener {
         this.hueFactor = new LabelSlider("Hue Cycle Factor: 200", 2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));
         this.exponent = new LabelSlider("Equation: z^2 + c", 1, 10, 2, new Dimension(edgeCellCount, labelSliderHeight));
 
-        this.add(iteration.getLabel());
-        this.add(iteration.getSlider());
-        iteration.getSlider().addChangeListener(this);
-
-        this.add(hueOffset.getLabel());
-        this.add(hueOffset.getSlider());
-        hueOffset.getSlider().addChangeListener(this);
-
-        this.add(hueFactor.getLabel());
-        this.add(hueFactor.getSlider());
-        hueFactor.getSlider().addChangeListener(this);
-
-        this.add(exponent.getLabel());
-        this.add(exponent.getSlider());
-        exponent.getSlider().addChangeListener(this);
+        this.incorporate(iteration);
+        this.incorporate(hueOffset);
+        this.incorporate(hueFactor);
+        this.incorporate(exponent);
 
         this.setBounds(edgeCellCount, 0 , edgeCellCount, edgeCellCount);
 
         this.setFocusable(true);
         this.setOpaque(true);
         this.setVisible(true);
+    }
+
+    private void incorporate(LabelSlider lSlider){
+        this.add(lSlider.getLabel());
+        this.add(lSlider.getSlider());
+        lSlider.getSlider().addChangeListener(this);
     }
 
     /**
