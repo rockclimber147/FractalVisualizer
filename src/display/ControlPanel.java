@@ -14,6 +14,7 @@ import java.awt.*;
  */
 public class ControlPanel extends JPanel implements ChangeListener {
     private static final int LABEL_SLIDER_COUNT = 4;
+    private static final int EDGE_LABEL_HEIGHT = 20;
     private static final int DEFAULT_ITERATION_COUNT = 100;
     private static final int DEFAULT_HUE_OFFSET = 500;
     private static final int DEFAULT_HUE_CYCLE_FACTOR = 200;
@@ -23,6 +24,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
     private final LabelSlider hueOffset;
     private final LabelSlider hueFactor;
     private final LabelSlider exponent;
+    private final JLabel displayPanelWidth;
 
     /**
      * Creates a ControlPanel object
@@ -31,7 +33,8 @@ public class ControlPanel extends JPanel implements ChangeListener {
      */
     public ControlPanel(final Renderer renderer, final int edgeCellCount){
         this.renderer = renderer;
-        int labelSliderHeight = edgeCellCount / LABEL_SLIDER_COUNT;
+        int labelSliderHeight = edgeCellCount / LABEL_SLIDER_COUNT - EDGE_LABEL_HEIGHT;
+
         this.iteration = new LabelSlider("Iteration Count: " + DEFAULT_ITERATION_COUNT,
                 1, 2500, 100, new Dimension(edgeCellCount, labelSliderHeight));
         this.hueOffset = new LabelSlider("Hue Offset: " + DEFAULT_HUE_OFFSET,
@@ -40,16 +43,22 @@ public class ControlPanel extends JPanel implements ChangeListener {
                 2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));
         this.exponent = new LabelSlider("Equation: z^" + DEFAULT_EXPONENT + " + c",
                 1, 10, 2, new Dimension(edgeCellCount, labelSliderHeight));
+        this.displayPanelWidth = new JLabel("View square is : " + String.format("%1.3e", 4.00) + " units wide");
 
+        this.incorporateLabelSlider(exponent);
         this.incorporateLabelSlider(iteration);
         this.incorporateLabelSlider(hueOffset);
         this.incorporateLabelSlider(hueFactor);
-        this.incorporateLabelSlider(exponent);
+        this.add(displayPanelWidth);
 
         this.setBounds(edgeCellCount, 0 , edgeCellCount, edgeCellCount);
         this.setFocusable(true);
         this.setOpaque(true);
         this.setVisible(true);
+    }
+
+    public void updateZoomDisplay(double currentViewWidth){
+        displayPanelWidth.setText("View square is : " + String.format("%1.3e", currentViewWidth) + " units wide");
     }
 
     private void incorporateLabelSlider(LabelSlider lSlider){

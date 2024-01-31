@@ -133,6 +133,7 @@ public class Renderer {
         double newTopLeftX = modelEventX - newEdgeLength * screenEventRelativeX;
         double newTopLeftY = modelEventY + newEdgeLength * screenEventRelativeY;
 
+        controlPanel.updateZoomDisplay(newEdgeLength);
         grid.resize(newTopLeftX, newTopLeftY, newEdgeLength);
         grid.update();
         display.repaint();
