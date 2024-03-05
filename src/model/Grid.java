@@ -71,7 +71,7 @@ public class Grid {
      * Updates the coordinates of each cell in the grid
      */
     private void updateGridCellCoordinates(){
-        double delta = this.edgeLength / (edgeCellCount - 1);
+        double delta = this.edgeLength / edgeCellCount;
 
         for (int row = 0; row < edgeCellCount; row++){
             double currentRealCoordinate = this.topLeft[0] + delta * row;

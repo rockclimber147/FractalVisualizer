@@ -15,7 +15,7 @@ import java.awt.*;
 public class DisplayPanel extends JPanel{
     // Screen Settings
     private final int  pixelEdgeCount;
-    private final GridCell[][] cells;
+    private final Grid grid;
 
     /**
      * Creates a display panel for the rendered Mandelbrot set
@@ -25,7 +25,7 @@ public class DisplayPanel extends JPanel{
      */
     public DisplayPanel(final Grid grid, final int pixelEdgeCount, final InputHandler inputHandler) {
         this.pixelEdgeCount = pixelEdgeCount;
-        this.cells = grid.getCells();
+        this.grid = grid;
         this.addMouseListener(inputHandler);
         this.addMouseMotionListener(inputHandler);
         this.addMouseWheelListener(inputHandler);
@@ -41,6 +41,7 @@ public class DisplayPanel extends JPanel{
     @Override
     public void paintComponent(final Graphics g){
         super.paintComponent(g);
+        GridCell[][] cells = this.grid.getCells();
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(1.05f));
         for (int i = 0; i < pixelEdgeCount; i++){
