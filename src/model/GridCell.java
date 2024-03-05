@@ -81,7 +81,7 @@ public class GridCell {
      * @param real The real part to set
      * @param complex The complex part to set
      */
-    public void setCoordinates(Double real, double complex){
+    public void setCoordinates(double real, double complex){
         coordinates.setRealPart(real);
         coordinates.setComplexPart(complex);
         value.setRealPart(real);
