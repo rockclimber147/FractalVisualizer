@@ -86,8 +86,8 @@ public class ComplexNumber {
      * Gets the distance of this complex number from the origin
      * @return The distance to the origin
      */
-    public double getDistanceFromOrigin(){
-        return Math.sqrt(this.realPart * this.realPart + this.getComplexPart() * this.getComplexPart());
+    public double getDistanceFromOriginSquared(){
+        return this.realPart * this.realPart + this.getComplexPart() * this.getComplexPart();
     }
 
     @Override

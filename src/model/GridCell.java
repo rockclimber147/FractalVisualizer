@@ -55,7 +55,7 @@ public class GridCell {
             this.value.add(this.coordinates);
 
             // If the value escapes the local box, note the amount of iterations it took
-            if (this.value.getDistanceFromOrigin() > 2){
+            if (this.value.getDistanceFromOriginSquared() > 4){
                 this.lastIterationCount = i;
                 updateColor();
                 return;
