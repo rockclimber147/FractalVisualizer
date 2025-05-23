@@ -85,23 +85,21 @@ public class Grid {
     /**
      * Tells each cell to iterate
      */
-    public void iterateGrid(){
-        for (GridCell[] row: cells){
-            for (GridCell col: row){
-                col.iterate();
-            }
-        }
+    public void iterateGrid() {
+        Arrays.stream(cells)
+                .flatMap(Arrays::stream)
+                .parallel()
+                .forEach(GridCell::iterate);
     }
 
     /**
      * Tells each cell to update their colors
      */
-    public void updateColors(){
-        for (GridCell[] row: cells){
-            for (GridCell cell: row){
-                cell.updateColor();
-            }
-        }
+    public void updateColors() {
+        Arrays.stream(cells)
+                .flatMap(Arrays::stream)
+                .parallel()
+                .forEach(GridCell::updateColor);
     }
 
     /**

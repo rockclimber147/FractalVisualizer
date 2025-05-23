@@ -35,6 +35,7 @@ public class Renderer {
         this.controlPanel = new ControlPanel(this, edgeCellCount - 5);
         this.zoomFactor = DEFAULT_ZOOM_FACTOR;
         this.grid.update();
+        this.display.update();
     }
 
     /**
@@ -44,13 +45,13 @@ public class Renderer {
     public void updateGlobalIterationCount(final int newCount){
         GridCell.setIterationCount(newCount);
         grid.update();
-        display.repaint();
+        display.update();
     }
 
     public void updateGlobalExponent(final int newExponent){
         GridCell.setZExponent(newExponent);
         grid.update();
-        display.repaint();
+        display.update();
     }
 
     /**
@@ -59,7 +60,7 @@ public class Renderer {
      */
     public void updateGlobalColorOffset(final double newOffset){
         GridCell.setColorOffset(newOffset);
-        display.repaint();
+        display.update();
     }
 
     /**
@@ -68,7 +69,7 @@ public class Renderer {
      */
     public void updateGlobalColorFactor(final double newFactor){
         GridCell.setColorScale(newFactor);
-        display.repaint();
+        display.update();
     }
 
     public DisplayPanel getDisplay(){
@@ -87,7 +88,7 @@ public class Renderer {
         }
         grid.translate((double) -inputState.getMouseDeltaX() / edgeCellCount, (double) inputState.getMouseDeltaY() / edgeCellCount);
         grid.update();
-        display.repaint();
+        display.update();
     }
 
     /**
@@ -136,6 +137,6 @@ public class Renderer {
         controlPanel.updateZoomDisplay(newEdgeLength);
         grid.resize(newTopLeftX, newTopLeftY, newEdgeLength);
         grid.update();
-        display.repaint();
+        display.update();
     }
 }
