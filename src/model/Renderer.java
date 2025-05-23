@@ -72,6 +72,22 @@ public class Renderer {
         display.update();
     }
 
+    public void setJuliaMode(final boolean mode) {
+        GridCell.setIsJulia(mode);
+    }
+
+    public void updateJuliaConstantReal(double value) {
+        GridCell.setJuliaReal(value);
+        grid.update();
+        display.update();
+    }
+
+    public void updateJuliaConstantImag(double value) {
+        GridCell.setJuliaImag(value);
+        grid.update();
+        display.update();
+    }
+
     public DisplayPanel getDisplay(){
         return display;
     }

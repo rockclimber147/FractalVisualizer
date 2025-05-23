@@ -1,6 +1,7 @@
 package display;
 
 import javax.swing.*;
+import javax.swing.JCheckBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import model.Renderer;
@@ -13,7 +14,7 @@ import java.awt.*;
  * @version 2024
  */
 public class ControlPanel extends JPanel implements ChangeListener {
-    private static final int LABEL_SLIDER_COUNT = 4;
+    private static final int LABEL_SLIDER_COUNT = 6;
     private static final int EDGE_LABEL_HEIGHT = 20;
     private static final int DEFAULT_ITERATION_COUNT = 100;
     private static final int DEFAULT_HUE_OFFSET = 500;
@@ -24,6 +25,9 @@ public class ControlPanel extends JPanel implements ChangeListener {
     private final LabelSlider hueOffset;
     private final LabelSlider hueFactor;
     private final LabelSlider exponent;
+    private final JCheckBox juliaToggle;
+    private final LabelSlider juliaRealSlider;
+    private final LabelSlider juliaImagSlider;
     private final JLabel displayPanelWidth;
 
     /**
@@ -43,13 +47,27 @@ public class ControlPanel extends JPanel implements ChangeListener {
                 2, 400, 200, new Dimension(edgeCellCount, labelSliderHeight));
         this.exponent = new LabelSlider("Equation: z^" + DEFAULT_EXPONENT + " + c",
                 1, 10, 2, new Dimension(edgeCellCount, labelSliderHeight));
+
         this.displayPanelWidth = new JLabel("View square is : " + String.format("%1.3e", 4.00) + " units wide");
+        this.juliaToggle = new JCheckBox("Toggle Julia Set");
+        this.juliaRealSlider = new LabelSlider("Julia C Real: 0.0", -2000, 2000, 0, new Dimension(edgeCellCount, labelSliderHeight));
+        this.juliaImagSlider = new LabelSlider("Julia C Imag: 0.0", -2000, 2000, 0, new Dimension(edgeCellCount, labelSliderHeight));
 
         this.incorporateLabelSlider(exponent);
         this.incorporateLabelSlider(iteration);
         this.incorporateLabelSlider(hueOffset);
         this.incorporateLabelSlider(hueFactor);
+        this.add(this.juliaToggle);
+        this.incorporateLabelSlider(juliaRealSlider);
+        this.incorporateLabelSlider(juliaImagSlider);
         this.add(displayPanelWidth);
+
+        this.juliaToggle.addActionListener(e -> {
+            boolean isJulia = juliaToggle.isSelected();
+            renderer.setJuliaMode(isJulia);
+            renderer.updateGrid();
+
+        });
 
         this.setBounds(edgeCellCount, 0 , edgeCellCount, edgeCellCount);
         this.setFocusable(true);
@@ -97,6 +115,16 @@ public class ControlPanel extends JPanel implements ChangeListener {
             int value = exponentSlider.getValue();
             exponent.getLabel().setText("Equation: z^" + value + " + c");
             renderer.updateGlobalExponent(value);
+            renderer.updateGrid();
+        }else if (e.getSource().equals(juliaRealSlider.getSlider())) {
+            double value = juliaRealSlider.getSlider().getValue() / 1000.0;
+            juliaRealSlider.getLabel().setText("Julia C Real: " + value);
+            renderer.updateJuliaConstantReal(value);
+            renderer.updateGrid();
+        } else if (e.getSource().equals(juliaImagSlider.getSlider())) {
+            double value = juliaImagSlider.getSlider().getValue() / 1000.0;
+            juliaImagSlider.getLabel().setText("Julia C Imag: " + value);
+            renderer.updateJuliaConstantImag(value);
             renderer.updateGrid();
         }
     }

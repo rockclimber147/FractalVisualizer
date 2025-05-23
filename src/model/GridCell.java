@@ -10,6 +10,9 @@ import java.awt.*;
  * @version 2024
  */
 public class GridCell {
+    private static boolean isJulia = false;
+    private static double juliaReal = -.7;
+    private static double juliaImag = .27;
     private static double colorScale = 100;
     private static double colorOffset = 0.5;
 
@@ -17,7 +20,6 @@ public class GridCell {
 
     private static int zExponent = 2;
     private final ComplexNumber coordinates;
-    private final ComplexNumber value;
     private int lastIterationCount;
     private Color cellColor;
 
@@ -27,9 +29,12 @@ public class GridCell {
      */
     public GridCell(final ComplexNumber coordinates){
         this.coordinates = coordinates;
-        this.value = coordinates.copy();
         this.cellColor = new Color(0,0,0);
     }
+
+    public static void setIsJulia(boolean val) { isJulia = val; }
+    public static void setJuliaReal(double val) { juliaReal = val; }
+    public static void setJuliaImag(double val) { juliaImag = val; }
 
     public static void setColorScale(double colorScale) {
         GridCell.colorScale = colorScale;
@@ -48,14 +53,18 @@ public class GridCell {
     /**
      * Iterates the value in the cell iteration count times or until the value escapes to infinity
      */
-    public void iterate(){
+    public void iterate() {
         this.lastIterationCount = -1;
-        for (int i = 0; i < iterationCount; i++){
-            this.value.power(zExponent);
-            this.value.add(this.coordinates);
 
-            // If the value escapes the local box, note the amount of iterations it took
-            if (this.value.getDistanceFromOriginSquared() > 4){
+        // Determine initial z and C
+        ComplexNumber z = isJulia ? coordinates.copy() : new ComplexNumber(0, 0);
+        ComplexNumber c = isJulia ? new ComplexNumber(juliaReal, juliaImag) : coordinates.copy();
+
+        for (int i = 0; i < iterationCount; i++) {
+            z.power(zExponent);
+            z.add(c);
+
+            if (z.getDistanceFromOriginSquared() > 4) {
                 this.lastIterationCount = i;
                 updateColor();
                 return;
@@ -84,8 +93,6 @@ public class GridCell {
     public void setCoordinates(double real, double complex){
         coordinates.setRealPart(real);
         coordinates.setComplexPart(complex);
-        value.setRealPart(real);
-        value.setComplexPart(complex);
     }
 
     public Color getCellColor(){

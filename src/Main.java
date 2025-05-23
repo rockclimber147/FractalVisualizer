@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        int edgeCellCount = 1000;
+        int edgeCellCount = 700;
         GridCell.setIterationCount(100);
 
         Renderer renderer = new Renderer(edgeCellCount);
